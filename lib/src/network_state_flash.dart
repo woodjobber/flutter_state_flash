@@ -7,7 +7,7 @@ enum NetworkDataState {
   /// 等待数据
   waiting,
 
-  /// 没有数据，服务器与客户端保持正常通信，服务端没有数据返回
+  /// 没有数据，服务器与客户端保持正常连接，服务端没有数据返回
   empty,
 
   /// 未知，有可能是服务器错误或网络错误，客户端不知道远端的数据情况
@@ -28,22 +28,31 @@ class NetworkStateFlash extends StatefulWidget {
       this.state = NetworkDataState.idle,
       required this.child,
       this.hintText,
+      this.refreshTitle,
       this.idleBuilder,
       this.waitingBuilder,
       this.emptyBuilder,
       this.unknownBuilder,
       this.onRefresh})
       : super(key: key);
-
+  /// 数据状态
   final NetworkDataState state;
   final Widget child;
+  /// 提示文案
   final String? hintText;
+  /// 刷新按钮标题
+  final String? refreshTitle;
+  /// 初始数据状态组件
   final IdleWidgetBuilder? idleBuilder;
+  /// 等待数据状态组件
   final WaitingWidgetBuilder? waitingBuilder;
+  /// 空数据状态组件
   final EmptyWidgetBuilder? emptyBuilder;
+  /// 未知数据状态组件
   final UnknownWidgetBuilder? unknownBuilder;
+  /// 刷新按钮事件回调
   final VoidCallback? onRefresh;
-
+  
   @override
   State<StatefulWidget> createState() => _NetworkStateFlashState();
 }
@@ -118,9 +127,9 @@ class _NetworkStateFlashState extends State<NetworkStateFlash> {
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.lightBlue)),
-                  child: const Text(
-                    '点击刷新',
-                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  child: Text(
+                    widget.refreshTitle ?? '点击刷新',
+                    style: const TextStyle(color: Colors.white, fontSize: 15),
                   )),
         ],
       ),
