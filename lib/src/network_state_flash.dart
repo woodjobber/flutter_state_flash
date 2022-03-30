@@ -38,7 +38,7 @@ class NetworkStateFlash extends StatefulWidget {
 
   /// 数据状态
   final NetworkDataState state;
-  
+
   final Widget child;
 
   /// 提示文案
@@ -105,7 +105,7 @@ class _NetworkStateFlashState extends State<NetworkStateFlash> {
         if (widget.unknownBuilder != null) {
           child = widget.unknownBuilder!(context);
         } else {
-          child = _emptyWidget();
+          child = _errorWidget();
         }
         break;
       case NetworkDataState.some:
@@ -138,6 +138,36 @@ class _NetworkStateFlashState extends State<NetworkStateFlash> {
                           MaterialStateProperty.all(Colors.lightBlue)),
                   child: Text(
                     widget.refreshTitle ?? '点击刷新',
+                    style: const TextStyle(color: Colors.white, fontSize: 15),
+                  )),
+        ],
+      ),
+    );
+  }
+
+  Widget _errorWidget() {
+    return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.zero,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            widget.hintText ?? '网络异常，请稍候重试',
+            style: const TextStyle(color: Colors.black54, fontSize: 15),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          widget.onRefresh == null
+              ? Container()
+              : ElevatedButton(
+                  onPressed: widget.onRefresh,
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.lightBlue)),
+                  child: Text(
+                    widget.refreshTitle ?? '重试',
                     style: const TextStyle(color: Colors.white, fontSize: 15),
                   )),
         ],
