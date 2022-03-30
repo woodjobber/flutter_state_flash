@@ -27,6 +27,7 @@ class FutureStateFlash extends StatefulWidget {
   /// If no future has yet completed, including in the case where [future] is
   /// null, the [NetworkDataState] is [NetworkDataState.empty].
   final Future? future;
+  
   final Widget child;
 
   /// The placeholder text

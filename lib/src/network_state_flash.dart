@@ -17,9 +17,9 @@ enum NetworkDataState {
   some,
 }
 
-typedef IdleWidgetBuilder = Widget Function(BuildContext);
+typedef IdleWidgetBuilder    = Widget Function(BuildContext);
 typedef WaitingWidgetBuilder = Widget Function(BuildContext);
-typedef EmptyWidgetBuilder = Widget Function(BuildContext);
+typedef EmptyWidgetBuilder   = Widget Function(BuildContext);
 typedef UnknownWidgetBuilder = Widget Function(BuildContext);
 
 class NetworkStateFlash extends StatefulWidget {
@@ -35,24 +35,33 @@ class NetworkStateFlash extends StatefulWidget {
       this.unknownBuilder,
       this.onRefresh})
       : super(key: key);
+
   /// 数据状态
   final NetworkDataState state;
+  
   final Widget child;
+
   /// 提示文案
   final String? hintText;
+
   /// 刷新按钮标题
   final String? refreshTitle;
+
   /// 初始数据状态组件
   final IdleWidgetBuilder? idleBuilder;
+
   /// 等待数据状态组件
   final WaitingWidgetBuilder? waitingBuilder;
+
   /// 空数据状态组件
   final EmptyWidgetBuilder? emptyBuilder;
+
   /// 未知数据状态组件
   final UnknownWidgetBuilder? unknownBuilder;
+
   /// 刷新按钮事件回调
   final VoidCallback? onRefresh;
-  
+
   @override
   State<StatefulWidget> createState() => _NetworkStateFlashState();
 }
@@ -62,7 +71,7 @@ class _NetworkStateFlashState extends State<NetworkStateFlash> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          debugPrint(constraints.maxHeight.toString());
+      debugPrint(constraints.maxHeight.toString());
       return Container(
         color: Colors.red,
         width: constraints.maxWidth,
