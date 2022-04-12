@@ -71,7 +71,6 @@ class _NetworkStateFlashState extends State<NetworkStateFlash> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-      debugPrint(constraints.maxHeight.toString());
       return Container(
         color: Colors.transparent,
         width: constraints.maxWidth,
