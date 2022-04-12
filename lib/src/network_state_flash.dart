@@ -73,7 +73,7 @@ class _NetworkStateFlashState extends State<NetworkStateFlash> {
         builder: (BuildContext context, BoxConstraints constraints) {
       debugPrint(constraints.maxHeight.toString());
       return Container(
-        color: Colors.red,
+        color: Colors.transparent,
         width: constraints.maxWidth,
         height: constraints.maxHeight,
         child: _buildStateWidget(context),
