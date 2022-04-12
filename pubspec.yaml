@@ -1,6 +1,6 @@
 name: flutter_state_flash
 description: 网络数据状态占位图.
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/woodjobber/flutter_state_flash.git
 
 environment:
