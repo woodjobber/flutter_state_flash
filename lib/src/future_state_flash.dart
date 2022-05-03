@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'network_state_flash.dart';
 
+typedef SnapshotCallback = void Function(dynamic data);
+
 class FutureStateFlash extends StatefulWidget {
   /// Creates a widget that builds itself based on the latest snapshot of
   /// interaction with a [Future].
@@ -18,7 +20,8 @@ class FutureStateFlash extends StatefulWidget {
       this.waitingBuilder,
       this.emptyBuilder,
       this.unknownBuilder,
-      this.onRefresh})
+      this.onRefresh,
+      this.builder})
       : super(key: key);
 
   /// The asynchronous computation to which this builder is currently connected,
@@ -27,7 +30,7 @@ class FutureStateFlash extends StatefulWidget {
   /// If no future has yet completed, including in the case where [future] is
   /// null, the [NetworkDataState] is [NetworkDataState.empty].
   final Future? future;
-  
+
   final Widget child;
 
   /// The placeholder text
@@ -40,6 +43,7 @@ class FutureStateFlash extends StatefulWidget {
   final EmptyWidgetBuilder? emptyBuilder;
   final UnknownWidgetBuilder? unknownBuilder;
   final VoidCallback? onRefresh;
+  final SnapshotCallback? builder;
 
   @override
   State<FutureStateFlash> createState() => _FutureStateFlashState();
@@ -53,12 +57,14 @@ class _FutureStateFlashState extends State<FutureStateFlash> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           var state = NetworkDataState.waiting;
           if (snapshot.connectionState == ConnectionState.none) {
-            state = NetworkDataState.idle;
+              state = NetworkDataState.idle;
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
               state = NetworkDataState.some;
+              widget.builder?.call(snapshot.data);
             } else if (snapshot.hasError) {
               state = NetworkDataState.unknown;
+              widget.builder?.call(null);
             } else {
               state = NetworkDataState.empty;
             }
